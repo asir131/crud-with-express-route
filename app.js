@@ -2,12 +2,14 @@ const express = require('express');
 const { json } = require('express');
 const mongoose = require('mongoose');
 const userRouter = require('./router/userRouter');
+const studentRouter = require('./router/studentRouter');
 
 const app = express();
-const port = 3002;
+
 
 app.use(json());
-
+require('dotenv').config()
+const port = process.env.port;
 mongoose.connect("mongodb://localhost:27017/company").then(() => {
     console.log("server connected");
     app.listen(port, () => {
@@ -16,6 +18,7 @@ mongoose.connect("mongodb://localhost:27017/company").then(() => {
 }).catch(err => console.error(err));
 
 app.use('/user', userRouter);
+app.use('/student', studentRouter);
 
 
 
