@@ -4,7 +4,8 @@ const Student =require("../models/Student");
 let createNewStudent = async (req, res) => {
     let student = new Student({
      name: req.body.name,
-     id: req.body.id
+     id: req.body.id,
+     userId: req.body.userId,
     })
     student.save().then(data => {
      console.log(data);
@@ -30,7 +31,7 @@ let createNewStudent = async (req, res) => {
 
 let getSingleStudent = async (req, res) => {
     const {id}=req.params;
-    const studentData = await Student.findById(id);
+    const studentData = await Student.findById(id).populate('userId');
 //   console.log(studentData);
 //   let student
      
