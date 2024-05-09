@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const UserSchema = new mongoose.Schema({
     name: String,
@@ -6,7 +7,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required:[true,'Enter your email address'],
         trim: true,
-        uniue:true,
+        unique: true,
         validate: {
             validator: function(value){
                 return /\S+@\S+\.\S+/.test(value)
@@ -31,6 +32,18 @@ const UserSchema = new mongoose.Schema({
     }
     // Add other properties as needed
 });
+
+UserSchema.pre('save',async function(next){
+    try{
+        const hashedPassword = await bcrypt.hash(this.password,10)
+        this.password=hashedPassword;
+        this.confirmPassword=null;
+    }
+    catch(err){
+        console.log(err);
+    }
+})
+
 
 const User = mongoose.model("developers", UserSchema);
 
