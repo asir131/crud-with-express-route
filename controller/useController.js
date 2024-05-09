@@ -7,14 +7,14 @@ let createNewUser = async (req, res) => {
      email: req.body.email
     })
     user.save().then(data => {
-     console.log(data);
+     
      res.json({
          message:"User Created",
          data
      })
     })
     .catch(err=>{
-     console.log(err);
+     console.log("message from error",err);
     })
     ;
  };

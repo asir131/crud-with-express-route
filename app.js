@@ -3,6 +3,7 @@ const { json } = require('express');
 const mongoose = require('mongoose');
 const userRouter = require('./router/userRouter');
 const studentRouter = require('./router/studentRouter');
+const authRouter = require('./router/authRouter');
 
 const app = express();
 
@@ -19,6 +20,7 @@ mongoose.connect("mongodb://localhost:27017/company").then(() => {
 
 app.use('/user', userRouter);
 app.use('/student', studentRouter);
+app.use('/auth', authRouter);
 
 
 
